@@ -66,6 +66,11 @@
 		<li class="list-item">제에발 제에발</li>
 		<li class="list-item">제에발 제에발 제에발</li>
 	</ul>
+	<main>
+		<section id="panel1-img">
+			<img id="flying-santa-image" src="./Render_img/Santa_flying.png" alt="santa flying">
+		</section>
+	</main>
 </body>
 
 <script>
@@ -74,17 +79,31 @@
 	const listItems = document.querySelectorAll('.list-item')
 	const division = (listStyleChangeEndY - listStyleChangeStartY) / listItems.length
 
-	window.addEventListener("scroll", ()=>{
-		if(document.getElementById("on")) document.getElementById("on").removeAttribute("id")
-	
-		if (window.scrollY > listStyleChangeStartY && window.scrollY < listStyleChangeEndY){
+	const panel1img = document.getElementById('panel1-img')
+
+	const flyingSantaImage = document.getElementById('flying-santa-image')
+
+	window.addEventListener("scroll", () => {
+		//console.log(window.scrollY)
+		if (document.getElementById("on")) document.getElementById("on").removeAttribute("id")
+
+		if (window.scrollY > listStyleChangeStartY && window.scrollY < listStyleChangeEndY) {
 			console.log(window.scrollY)
 			console.log(listStyleChangeStartY)
 			console.log(listItems.length)
-			
+
 			const targetIDX = Math.floor((window.scrollY - listStyleChangeStartY) / division)
 			console.log(targetIDX)
 			listItems[targetIDX].id = "on"
+		}
+		const scrollYBottom = window.scrollY + document.documentElement.clientHeight;
+
+		if (scrollYBottom > panel1img.offsetTop && scrollYBottom < panel1img.offsetTop + panel1img.offsetHeight + 100) {
+			const translateX = 80 - 80 * 1.3 * (scrollYBottom - panel1img.offsetTop) / (panel1img.offsetHeight + 100)
+			const translateY = -13 + 13 * (scrollYBottom - panel1img.offsetTop) / (panel1img.offsetHeight + 100)
+			const rotationDegree = 23 - 23 * 1.9 * (scrollYBottom - panel1img.offsetTop) / (panel1img.offsetHeight + 100)
+
+			flyingSantaImage.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${rotationDegree}deg)`
 		}
 	})
 </script>
